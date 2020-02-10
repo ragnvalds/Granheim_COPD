@@ -1,7 +1,9 @@
 ####qPCR import COPD####
+This code works now. You only have to upload new exports to the exports folder under data.
+
 
 ## qPCR import
-library(qpcrpal); library(dplyr); library(qpcR); library(readxl); library(ggplot2); library(stringr); library(tidyr)
+library(qpcrpal); library(dplyr); library(qpcR); library(readxl); library(ggplot2); library(stringr); library(tidyr); 
 
 ### Prepare a batch of imported data 
 batch <- prepare_batch("./data/exports/", equipment = "quant", skip = 21) %>%
@@ -50,13 +52,15 @@ for(i in 1:nrow(best.models)){
   
 }
 
-#GO to this point if you need to rerun data
 
-# combine all results and str split id variables
-qpcrdat <- rbind_all(results) 
+
+
+ #combine all results and str split id variables
+qpcrdat <- rbind_all(results)
 id.var <- str_split_fixed(qpcrdat$ID, "_", 5) 
-colnames(id.var) <- c("subject", "cdna", "timepoint", "gene","leg")  
+colnames(id.var) <- c("Ex_nr", "cdna", "timepoint", "gene", "leg")  
 qpcrdat <- cbind(id.var, qpcrdat[,-1])
+
 
 
 
@@ -78,7 +82,7 @@ for(i in  1:nrow(best.models)){
 
 efficiencies <- rbind_all(efficiencies) 
 id.var <- str_split_fixed(efficiencies$ID, "_", 5) 
-colnames(id.var) <- c("subject", "cdna", "timepoint", "gene","leg")  
+colnames(id.var) <- c("Ex_nr", "cdna", "timepoint", "gene", "leg")  
 efficiencies <- cbind(id.var, efficiencies[,-1])
 
 efficiencies %>%
@@ -101,7 +105,9 @@ effs <- efficiencies %>%
 
 
 
+
 ## Extract information on replicates
+
 
 replicates <- data.frame(str_split(qpcrdat$gene, "_", simplify = TRUE))
 
@@ -116,7 +122,7 @@ qpcrdat
 ## Combine all qPCR parameters in the study to a data.frame containing all replicates
 qpcrdat.replicates <- qpcrdat %>%
   inner_join(effs, by = "gene") %>%
-  dplyr::select(subject, gene, cdna, cpD2, eff.y) %>%
+  dplyr::select(Ex_nr, gene, cdna, cpD2, eff.y) %>%
   mutate(cq = cpD2,
          eff = eff.y) %>%
   ungroup() %>%

@@ -1,2 +1,2 @@
 # Granheim_COPD
-Code for runnin qPCR on Granheim COPD study.
+Code for running qPCR on Granheim COPD study.
