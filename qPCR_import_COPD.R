@@ -132,14 +132,27 @@ qpcrdat.replicates <- qpcrdat %>%
 ### removed this code and then it worked:
 #separate(target, into = c("target", "cdna"), sep = "_") %>%
 
+####load sheet with FP and sets info####
+library(tidyverse)
 
+info <- read_excel("./data/RNA_stock_matrix.xlsx") %>%
+  dplyr:: select(FP, Timepoint, Leg, RM_leg, Ex_nr)%>% 
+  print()
+
+####innerjoin on ex_nr####
+
+qpcrdat.replicates <- qpcrdat.replicates %>%
+  inner_join(info) %>%
+  print() 
 
 ### Save data ####
 
 saveRDS(qpcrdat.replicates, "./derivedData/qpcr.replicates_copd.Rds")
 
 
-
+####write excel spreadsheet####
+library(writexl)
+write_xlsx(qpcrdat.replicates, "./derivedData/qpcr_r_output.xlsx")
 
 
 
