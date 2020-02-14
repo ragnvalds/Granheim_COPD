@@ -28,14 +28,8 @@ data.frame(table(model.tests$best.model, model.tests$target)) %>%
 best.models <- data.frame(target = names(apply(table(model.tests$best.model, model.tests$target), 2, which.max)),
                           model = as.character(row.names(table(model.tests$best.model, model.tests$target))[apply(table(model.tests$best.model, model.tests$target), 2, which.max)]))
 
-# Remove targets that are not to be used (bad primers)
-#best.models <- best.models %>%
-  #filter(!(target %in% c("NEAT1 F2R2", "MTs16 F3R3", 
-                         #"MTs12 F2R2", "MALAT1 F2R2", 
-                         #"Lnc31 F3R3", "LincRAM F2R2", 
-                         #"LincPINT F2R2", "LincP21 F3R3", 
-                         #"H19 F1R1", "DRRRNA F3R3"))) %>%
-  #print()
+
+
 
 ## load data with best model
 qpcrbatch <- prepare_batch("./data/exports/", equipment = "quant", skip = 21) 

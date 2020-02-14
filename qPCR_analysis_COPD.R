@@ -15,18 +15,7 @@ qdat <- qpcr.dat %>%
   #print()
 
 
-####load sheet with FP and sets info####
-library(tidyverse)
 
-info <- read_excel("./data/RNA_stock_matrix.xlsx") %>%
-  dplyr:: select(FP, Timepoint, Leg, RM_leg, Ex_nr)%>% 
-  print()
-
-####innerjoin on ex_nr####
-
-qpcrdat1 <- qpcrdat %>%
-  inner_join(info) %>%
-  print() 
 
 
 #load sheet with FP and sets info
